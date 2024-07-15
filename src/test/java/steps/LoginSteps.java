@@ -6,13 +6,13 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 
 import java.util.concurrent.TimeUnit;
 
 public class LoginSteps {
 
     WebDriver driver;
-
 
     @Given("User navigate to the Ecommerce application")
     public void userNavigateToTheEcommerceApplication() {
@@ -27,13 +27,13 @@ public class LoginSteps {
     public void userClicksOnTheLoginButton() {
         driver.findElement(By.xpath("//a[text()=\"Login\"]")).click();
     }
-    @Given("User enter the username as qa_user@qa.es")
-    public void userEnterTheUsernameAs() {
-        driver.findElement(By.id("username")).sendKeys("qa_user@qa.es");
+    @Given("User enter the username as {string}")
+    public void userEnterTheUsernameAs(String username) {
+        driver.findElement(By.id("username")).sendKeys(username);
     }
-    @Given("User enter the password as 123")
-    public void userEnterThePasswordAs() {
-        driver.findElement(By.id("password")).sendKeys("123");
+    @Given("User enter the password as {string}")
+    public void userEnterThePasswordAs(String password) {
+        driver.findElement(By.id("password")).sendKeys(password);
     }
     @When("User click on the login button")
     public void userClickOnTheLoginButton() {
@@ -42,6 +42,14 @@ public class LoginSteps {
     @Then("Login should be success")
     public void loginShouldBeSuccess() {
         driver.findElement(By.xpath("//a[@id=\"navbarDropdownMenuLink\"]")).getText().equals("USER");
+        driver.quit();
+    }
+
+
+    @When("Login should be fail")
+    public void loginShouldBeFail() {
+        String text = driver.findElement(By.id("username")).getText();
+        Assert.assertEquals(text, "");
         driver.quit();
     }
 }

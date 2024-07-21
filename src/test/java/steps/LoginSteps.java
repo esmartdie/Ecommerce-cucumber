@@ -10,17 +10,12 @@ import org.testng.Assert;
 
 import java.util.concurrent.TimeUnit;
 
-public class LoginSteps {
-
-    WebDriver driver;
+public class LoginSteps extends BaseSteps{
 
     @Given("User navigate to the Ecommerce application")
     public void userNavigateToTheEcommerceApplication() {
-        driver = new ChromeDriver();
+        initializeDriver();
         driver.get("http://localhost:8080/");
-        WebDriver.Options manage = driver.manage();
-        manage.timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        manage.window().maximize();
         System.out.println(driver.getTitle());
     }
     @Given("User clicks on the login button")
@@ -42,7 +37,7 @@ public class LoginSteps {
     @Then("Login should be success")
     public void loginShouldBeSuccess() {
         driver.findElement(By.xpath("//a[@id=\"navbarDropdownMenuLink\"]")).getText().equals("USER");
-        driver.quit();
+        quitDriver();
     }
 
 
@@ -50,6 +45,6 @@ public class LoginSteps {
     public void loginShouldBeFail() {
         String text = driver.findElement(By.id("username")).getText();
         Assert.assertEquals(text, "");
-        driver.quit();
+        quitDriver();
     }
 }

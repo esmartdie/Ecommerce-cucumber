@@ -12,12 +12,6 @@ import java.util.concurrent.TimeUnit;
 
 public class LoginSteps extends BaseSteps{
 
-    @Given("User navigate to the Ecommerce application")
-    public void userNavigateToTheEcommerceApplication() {
-        initializeDriver();
-        driver.get("http://localhost:8080/");
-        System.out.println(driver.getTitle());
-    }
     @Given("User clicks on the login button")
     public void userClicksOnTheLoginButton() {
         driver.findElement(By.xpath("//a[text()=\"Login\"]")).click();
@@ -45,6 +39,5 @@ public class LoginSteps extends BaseSteps{
     public void loginShouldBeFail() {
         String text = driver.findElement(By.id("username")).getText();
         Assert.assertEquals(text, "");
-        quitDriver();
     }
 }
